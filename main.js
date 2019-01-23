@@ -1,78 +1,112 @@
-// taken from http://bl.ocks.org/tgk/6068367
+// taken from https://bl.ocks.org/mbostock/1095795
 
-import d3 from "d3"
+import d3 from "./d3.js"
 
-var width = 960,
-  height = 500
+var svg = d3.select("svg"),
+  width = +svg.attr("width"),
+  height = +svg.attr("height"),
+  color = d3.scaleOrdinal(d3.schemeCategory10)
 
-var fill = d3.scale.category20()
+var a = { id: "a" },
+  b = { id: "b" },
+  c = { id: "c" },
+  nodes = [a, b, c],
+  links = []
 
-var force = d3.layout
-  .force()
-  .size([width, height])
-  .nodes([{}]) // initialize with a single node
-  .linkDistance(30)
-  .charge(-60)
-  .on("tick", tick)
+var simulation = d3
+  .forceSimulation(nodes)
+  .force("charge", d3.forceManyBody().strength(-1000))
+  .force("link", d3.forceLink(links).distance(200))
+  .force("x", d3.forceX())
+  .force("y", d3.forceY())
+  .alphaTarget(1)
+  .on("tick", ticked)
 
-var svg = d3
-  .select("body")
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height)
-  .on("mousemove", mousemove)
-  .on("mousedown", mousedownCanvas)
-
-svg
-  .append("rect")
-  .attr("width", width)
-  .attr("height", height)
-
-var nodes = force.nodes(),
-  links = force.links(),
-  node = svg.selectAll(".node"),
-  link = svg.selectAll(".link")
-
-var cursor = svg
-  .append("circle")
-  .attr("r", 30)
-  .attr("transform", "translate(-100,-100)")
-  .attr("class", "cursor")
+var g = svg
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
+  link = g
+    .append("g")
+    .attr("stroke", "#000")
+    .attr("stroke-width", 1.5)
+    .selectAll(".link"),
+  node = g
+    .append("g")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5)
+    .selectAll(".node")
 
 restart()
 
-function mousemove() {
-  cursor.attr("transform", "translate(" + d3.mouse(this) + ")")
-}
-
-function mousedownCanvas() {
-  var point = d3.mouse(this),
-    node = { x: point[0], y: point[1] },
-    n = nodes.push(node)
-
-  // add links to any nearby nodes
-  nodes.forEach(function(target) {
-    var x = target.x - node.x,
-      y = target.y - node.y
-    if (Math.sqrt(x * x + y * y) < 30) {
-      links.push({ source: node, target: target })
-    }
-  })
-
+d3.timeout(function() {
+  links.push({ source: a, target: b }) // Add a-b.
+  links.push({ source: b, target: c }) // Add b-c.
+  links.push({ source: c, target: a }) // Add c-a.
   restart()
-}
+}, 1000)
 
-function mousedownNode(d, i) {
-  nodes.splice(i, 1)
-  links = links.filter(function(l) {
-    return l.source !== d && l.target !== d
+d3.interval(
+  function() {
+    nodes.pop() // Remove c.
+    links.pop() // Remove c-a.
+    links.pop() // Remove b-c.
+    restart()
+  },
+  2000,
+  d3.now()
+)
+
+d3.interval(
+  function() {
+    nodes.push(c) // Re-add c.
+    links.push({ source: b, target: c }) // Re-add b-c.
+    links.push({ source: c, target: a }) // Re-add c-a.
+    restart()
+  },
+  2000,
+  d3.now() + 1000
+)
+
+function restart() {
+  // Apply the general update pattern to the nodes.
+  node = node.data(nodes, function(d) {
+    return d.id
   })
-  d3.event.stopPropagation()
+  node.exit().remove()
+  node = node
+    .enter()
+    .append("circle")
+    .attr("fill", function(d) {
+      return color(d.id)
+    })
+    .attr("r", 8)
+    .merge(node)
 
-  restart()
+  // Apply the general update pattern to the links.
+  link = link.data(links, function(d) {
+    return d.source.id + "-" + d.target.id
+  })
+  link.exit().remove()
+  link = link
+    .enter()
+    .append("line")
+    .merge(link)
+
+  // Update and restart the simulation.
+  simulation.nodes(nodes)
+  simulation.force("link").links(links)
+  simulation.alpha(1).restart()
 }
 
-function tick() {
+function ticked() {
+  node
+    .attr("cx", function(d) {
+      return d.x
+    })
+    .attr("cy", function(d) {
+      return d.y
+    })
+
   link
     .attr("x1", function(d) {
       return d.source.x
@@ -86,35 +120,4 @@ function tick() {
     .attr("y2", function(d) {
       return d.target.y
     })
-
-  node
-    .attr("cx", function(d) {
-      return d.x
-    })
-    .attr("cy", function(d) {
-      return d.y
-    })
-}
-
-function restart() {
-  node = node.data(nodes)
-
-  node
-    .enter()
-    .insert("circle", ".cursor")
-    .attr("class", "node")
-    .attr("r", 5)
-    .on("mousedown", mousedownNode)
-
-  node.exit().remove()
-
-  link = link.data(links)
-
-  link
-    .enter()
-    .insert("line", ".node")
-    .attr("class", "link")
-  link.exit().remove()
-
-  force.start()
 }

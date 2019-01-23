@@ -7,16 +7,33 @@ const width = +svg.attr("width")
 const height = +svg.attr("height")
 const color = d3.scaleOrdinal(d3.schemeCategory10)
 
+/*
 const a = { id: "a" }
 const b = { id: "b" }
 const c = { id: "c" }
-const nodes = [a, b, c]
+const d = { id: "d" }
+
+const nodes = [a, b, c, d]
+// const links = []
+const links = [
+  { source: a, target: b },
+  { source: d, target: c }
+]
+*/
+
+import stuff from "./el-graph-data.json"
+
+const nodes = stuff.nodes // .map((x) => ({...x}))
 const links = []
+// const links = stuff.links.map(({source, target}) => ({ source: {id: source}, target: {id : target}}))
+
+console.log("NODES", nodes.length)
+console.log("LINKS", links.length, links[0])
 
 const simulation = d3
   .forceSimulation(nodes)
-  .force("charge", d3.forceManyBody().strength(-1000))
-  .force("link", d3.forceLink(links).distance(200))
+  .force("charge", d3.forceManyBody().strength(-150))
+  .force("link", d3.forceLink(links).distance(50))
   .force("x", d3.forceX())
   .force("y", d3.forceY())
   .alphaTarget(1)
@@ -25,11 +42,13 @@ const simulation = d3
 const g = svg
   .append("g")
   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+
 let link = g
   .append("g")
   .attr("stroke", "#000")
   .attr("stroke-width", 1.5)
   .selectAll(".link")
+
 let node = g
   .append("g")
   .attr("stroke", "#fff")
@@ -38,6 +57,80 @@ let node = g
 
 restart()
 
+d3.timeout(function() {
+  // links = stuff.links.map(({source, target}) => ({ source: {id: source}, target: {id : target}}))
+  const source = nodes[0]
+
+  /*
+  console.log('SOURCE', source)
+
+  const target = nodes[1]
+  console.log('TARGET', target)
+  links.push({ source, target })
+  */
+
+  stuff.links.slice(15).forEach((z, i) => {
+    const target = nodes[i + 1]
+    // console.log('TARGET', target)
+    if (!target) return
+    links.push({ source, target })
+  })
+  // stuff.links.forEach(({source, target}) => links.push({ source, target }))
+  console.log("LINKS", links.length, links.slice(0)[0])
+  restart()
+}, 200)
+
+d3.timeout(function() {
+  // links = stuff.links.map(({source, target}) => ({ source: {id: source}, target: {id : target}}))
+  const source = nodes[25]
+
+  /*
+  console.log('SOURCE', source)
+
+  const target = nodes[1]
+  console.log('TARGET', target)
+  links.push({ source, target })
+  */
+
+  stuff.links.forEach((z, i) => {
+    const target = nodes[i + 30]
+    // console.log('TARGET', target)
+    if (!target) return
+    links.push({ source, target })
+  })
+  // stuff.links.forEach(({source, target}) => links.push({ source, target }))
+  console.log("LINKS", links.length, links.slice(0)[0])
+  restart()
+}, 1200)
+
+d3.timeout(function() {
+  // links = stuff.links.map(({source, target}) => ({ source: {id: source}, target: {id : target}}))
+  const source = nodes[15]
+
+  /*
+  console.log('SOURCE', source)
+
+  const target = nodes[1]
+  console.log('TARGET', target)
+  links.push({ source, target })
+  */
+
+  stuff.links.forEach((z, i) => {
+    const target = nodes[i + 20]
+    // console.log('TARGET', target)
+    if (!target) return
+    links.push({ source, target })
+  })
+  // stuff.links.forEach(({source, target}) => links.push({ source, target }))
+  console.log("LINKS", links.length, links.slice(0)[0])
+  restart()
+}, 2000)
+
+d3.timeout(function() {
+  simulation.stop()
+}, 50000)
+
+/*
 d3.timeout(function() {
   links.push({ source: a, target: b }) // Add a-b.
   links.push({ source: b, target: c }) // Add b-c.
@@ -66,6 +159,7 @@ d3.interval(
   2000,
   d3.now() + 1000
 )
+*/
 
 function restart() {
   // Apply the general update pattern to the nodes.

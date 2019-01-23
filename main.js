@@ -2,18 +2,18 @@
 
 import d3 from "./d3.js"
 
-var svg = d3.select("svg"),
-  width = +svg.attr("width"),
-  height = +svg.attr("height"),
-  color = d3.scaleOrdinal(d3.schemeCategory10)
+const svg = d3.select("svg")
+const width = +svg.attr("width")
+const height = +svg.attr("height")
+const color = d3.scaleOrdinal(d3.schemeCategory10)
 
-var a = { id: "a" },
-  b = { id: "b" },
-  c = { id: "c" },
-  nodes = [a, b, c],
-  links = []
+const a = { id: "a" }
+const b = { id: "b" }
+const c = { id: "c" }
+const nodes = [a, b, c]
+const links = []
 
-var simulation = d3
+const simulation = d3
   .forceSimulation(nodes)
   .force("charge", d3.forceManyBody().strength(-1000))
   .force("link", d3.forceLink(links).distance(200))
@@ -22,19 +22,19 @@ var simulation = d3
   .alphaTarget(1)
   .on("tick", ticked)
 
-var g = svg
-    .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
-  link = g
-    .append("g")
-    .attr("stroke", "#000")
-    .attr("stroke-width", 1.5)
-    .selectAll(".link"),
-  node = g
-    .append("g")
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 1.5)
-    .selectAll(".node")
+const g = svg
+  .append("g")
+  .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+let link = g
+  .append("g")
+  .attr("stroke", "#000")
+  .attr("stroke-width", 1.5)
+  .selectAll(".link")
+let node = g
+  .append("g")
+  .attr("stroke", "#fff")
+  .attr("stroke-width", 1.5)
+  .selectAll(".node")
 
 restart()
 

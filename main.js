@@ -47,6 +47,14 @@ const simulation = d3
   .alphaTarget(1)
   .on("tick", ticked)
 
+const makeUser = (d) => {
+  const c = document.createElementNS("http://www.w3.org/2000/svg", "circle")
+  const t = document.createElementNS("http://www.w3.org/2000/svg", "title")
+  t.textContent = d.id
+  c.appendChild(t)
+  return c
+}
+
 const restart = () => {
   // Apply the general update pattern to the nodes.
   // node = node.data(nodes, (d) => d.id)
@@ -54,7 +62,7 @@ const restart = () => {
   node.exit().remove()
   node = node
     .enter()
-    .append("circle")
+    .append(makeUser)
     .attr("title", (d) => d.id)
     .attr("fill", (d) => color(d.id))
     .attr("r", 8)
@@ -111,4 +119,4 @@ const fakeIt = () => {
 fakeIt()
 
 // stop after 50 seconds
-d3.timeout(() => simulation.stop(), 1300)
+d3.timeout(() => simulation.stop(), 3000)

@@ -1,17 +1,17 @@
 // taken from https://bl.ocks.org/mbostock/1095795
 
-import d3 from "./d3.js"
+// npm
+import delay from "delay"
 
-console.log(process.env.HELLO)
+// self
+import ask from "./query.js"
+import d3 from "./d3.js"
 
 const svg = d3.select("svg")
 const width = +svg.attr("width")
 const height = +svg.attr("height")
 const color = d3.scaleOrdinal(d3.schemeCategory10)
 
-// import stuff from "./el-graph-data.json"
-
-// const nodes = stuff.nodes
 const dataNodes = []
 const dataLinks = []
 
@@ -43,8 +43,8 @@ const ticked = () => {
 
 const simulation = d3
   .forceSimulation(dataNodes)
-  .force("charge", d3.forceManyBody().strength(-125))
-  .force("link", d3.forceLink(dataLinks).distance(200))
+  .force("charge", d3.forceManyBody().strength(-100))
+  .force("link", d3.forceLink(dataLinks).distance(75))
   .force("x", d3.forceX())
   .force("y", d3.forceY())
   .alphaTarget(1)
@@ -87,8 +87,6 @@ const restart = () => {
 
 restart()
 
-const hereRe = /(montréal|montreal|mtl|yul)/
-
 const addUser = (username) => {
   const found = dataNodes.find((x) => x.id === username)
   if (found) return found
@@ -102,36 +100,40 @@ const addLink = (source, target) =>
     (x) => x.source.id === source.id && x.target.id === target.id
   ) && dataLinks.push({ source, target })
 
-const fetchOne = (oyUrl, re) => {
-  return fetch(oyUrl)
-    .then((res) => res.json())
-    .then(({ data: { user: { login, followers: { nodes } } } }) => {
-      const source = addUser(login)
-      nodes.forEach(
-        (x, i) =>
-          x.location &&
-          re.test(x.location.toLowerCase()) &&
-          addLink(source, addUser(x.login))
+const fetchOne = (name, re) =>
+  ask(process.env.HELLO, name).then(
+    ({
+      data: {
+        user: {
+          login: nameSource,
+          followers: { nodes },
+        },
+      },
+    }) => {
+      const source = addUser(nameSource)
+      nodes = nodes.filter(
+        ({ location }) => location && re.test(location.toLowerCase())
       )
+      nodes.forEach(({ login }) => addLink(source, addUser(login)))
       console.log("dataNodes.length:", dataNodes.length)
       console.log("dataLinks.length:", dataLinks.length)
       restart()
-    })
-}
+      return nodes.map(({ login }) => login)
+    }
+  )
 
-fetchOne(require("./oy.json"), hereRe).catch((e) => {
-  console.error(e)
-  simulation.stop()
-})
+const hereRe = /(montréal|montreal|mtl|yul)/
 
-const allRe = /(quebec|québec)/
+const delayedFetch = (name, re, ms) => delay(ms).then(() => fetchOne(name, re))
 
-setTimeout(() => {
-  fetchOne(require("./oy.json"), allRe).catch((e) => {
+fetchOne("millette", hereRe)
+  .then((zzz) =>
+    Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, 500 + i * 500)))
+  )
+  .catch((e) => {
     console.error(e)
     simulation.stop()
   })
-}, 1000)
 
 // stop after a little while
-d3.timeout(() => simulation.stop(), 10000)
+d3.timeout(() => simulation.stop(), 60000)

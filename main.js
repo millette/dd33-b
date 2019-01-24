@@ -39,59 +39,56 @@ let node = g
 
 restart()
 
-d3.timeout(function() {
-  const source = nodes[0]
+const fakeIt = () => {
+  d3.timeout(() => {
+    const source = nodes[0]
 
-  stuff.links.slice(15).forEach((z, i) => {
-    const target = nodes[i + 1]
-    if (target) links.push({ source, target })
-  })
-  restart()
-}, 200)
+    stuff.links.slice(15).forEach((z, i) => {
+      const target = nodes[i + 1]
+      if (target) links.push({ source, target })
+    })
+    restart()
+  }, 200)
 
-d3.timeout(function() {
-  const source = nodes[25]
+  d3.timeout(() => {
+    const source = nodes[25]
 
-  stuff.links.forEach((z, i) => {
-    const target = nodes[i + 30]
-    if (target) links.push({ source, target })
-  })
-  restart()
-}, 500)
+    stuff.links.forEach((z, i) => {
+      const target = nodes[i + 30]
+      if (target) links.push({ source, target })
+    })
+    restart()
+  }, 500)
 
-d3.timeout(function() {
-  const source = nodes[15]
+  d3.timeout(() => {
+    const source = nodes[15]
 
-  stuff.links.forEach((z, i) => {
-    const target = nodes[i + 20]
-    if (target) links.push({ source, target })
-  })
-  restart()
-}, 1000)
+    stuff.links.forEach((z, i) => {
+      const target = nodes[i + 20]
+      if (target) links.push({ source, target })
+    })
+    restart()
+  }, 1000)
+}
 
-d3.timeout(function() {
-  simulation.stop()
-}, 50000)
+fakeIt()
 
-function restart() {
+// stop after 50 seconds
+d3.timeout(() => simulation.stop(), 50000)
+
+const restart = () => {
   // Apply the general update pattern to the nodes.
-  node = node.data(nodes, function(d) {
-    return d.id
-  })
+  node = node.data(nodes, (d) => d.id)
   node.exit().remove()
   node = node
     .enter()
     .append("circle")
-    .attr("fill", function(d) {
-      return color(d.id)
-    })
+    .attr("fill", (d) => color(d.id))
     .attr("r", 8)
     .merge(node)
 
   // Apply the general update pattern to the links.
-  link = link.data(links, function(d) {
-    return d.source.id + "-" + d.target.id
-  })
+  link = link.data(links, (d) => d.source.id + "-" + d.target.id)
   link.exit().remove()
   link = link
     .enter()
@@ -104,7 +101,7 @@ function restart() {
   simulation.alpha(1).restart()
 }
 
-function ticked() {
+const ticked = () => {
   node.attr("cx", (d) => d.x).attr("cy", (d) => d.y)
 
   link

@@ -19,13 +19,13 @@ const g = svg
 let link = g
   .append("g")
   .attr("stroke", "#000")
-  .attr("stroke-width", 1.5)
+  .attr("stroke-width", 1)
   .selectAll(".link")
 
 let node = g
   .append("g")
   .attr("stroke", "#fff")
-  .attr("stroke-width", 1.5)
+  .attr("stroke-width", 2)
   .selectAll(".node")
 
 const ticked = () => {
@@ -49,11 +49,13 @@ const simulation = d3
 
 const restart = () => {
   // Apply the general update pattern to the nodes.
-  node = node.data(nodes, (d) => d.id)
+  // node = node.data(nodes, (d) => d.id)
+  node = node.data(nodes)
   node.exit().remove()
   node = node
     .enter()
     .append("circle")
+    .attr("title", (d) => d.id)
     .attr("fill", (d) => color(d.id))
     .attr("r", 8)
     .merge(node)
@@ -109,4 +111,4 @@ const fakeIt = () => {
 fakeIt()
 
 // stop after 50 seconds
-d3.timeout(() => simulation.stop(), 50000)
+d3.timeout(() => simulation.stop(), 1300)

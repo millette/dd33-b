@@ -1,0 +1,35 @@
+query Followers($login: String!) {
+  rateLimit {
+    cost
+    limit
+    nodeCount
+    remaining
+    resetAt
+  }
+  user(login: $login) {
+    login
+    location
+    following(first: 100) {
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes {
+        login
+        location
+      }
+    }
+    followers(first: 100) {
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes {
+        login
+        location
+      }
+    }
+  }
+}

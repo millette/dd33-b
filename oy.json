@@ -1,0 +1,522 @@
+{
+  "data": {
+    "rateLimit": {
+      "cost": 1,
+      "limit": 5000,
+      "nodeCount": 100,
+      "remaining": 4993,
+      "resetAt": "2019-01-22T00:13:48Z"
+    },
+    "user": {
+      "followers": {
+        "totalCount": 220,
+        "pageInfo": {
+          "endCursor": "Y3Vyc29yOnYyOpK5MjAxNy0wNy0zMFQyMDoyNjoyNS0wNDowMM4BkPod",
+          "hasNextPage": true
+        },
+        "nodes": [
+          {
+            "login": "tlaurion",
+            "name": "",
+            "location": null
+          },
+          {
+            "login": "KourtneyFox",
+            "name": "Kourtney Fox",
+            "location": "New York USA"
+          },
+          {
+            "login": "psanders",
+            "name": "Pedro Sanders",
+            "location": "Atlanta, GA"
+          },
+          {
+            "login": "stars1377",
+            "name": "Sarah Maxwell",
+            "location": "gatineau "
+          },
+          {
+            "login": "benwiley4000",
+            "name": "Ben Wiley",
+            "location": "Montréal, Québec"
+          },
+          {
+            "login": "alanvan0502",
+            "name": "alanMTL11",
+            "location": "Montréal, Canada"
+          },
+          {
+            "login": "adastreamer",
+            "name": "Eugene Khashin",
+            "location": "Dublin IE, Moscow RU"
+          },
+          {
+            "login": "lachenmayer",
+            "name": "Harry Lachenmayer",
+            "location": "London, UK"
+          },
+          {
+            "login": "maximevaillancourt",
+            "name": "Maxime Vaillancourt",
+            "location": "Montréal, Québec"
+          },
+          {
+            "login": "RangerMauve",
+            "name": "",
+            "location": "Ottawa, ON, Canada"
+          },
+          {
+            "login": "ignacioito",
+            "name": "Ignacio Ito",
+            "location": "Montreal"
+          },
+          {
+            "login": "wilomgfx",
+            "name": "William Cantin",
+            "location": "Montreal, Canada"
+          },
+          {
+            "login": "nickmccurdy",
+            "name": "Nick McCurdy",
+            "location": "Weehawken, NJ"
+          },
+          {
+            "login": "micabalowinnie",
+            "name": "winnie micabalo",
+            "location": null
+          },
+          {
+            "login": "eruci",
+            "name": "Ervin Ruci",
+            "location": "Everywhere I go"
+          },
+          {
+            "login": "8tentaculos",
+            "name": "Alberto Masuelli",
+            "location": null
+          },
+          {
+            "login": "dannycolin",
+            "name": "Danny Colin",
+            "location": "Montreal, Quebec, Canada"
+          },
+          {
+            "login": "GreyShellzone",
+            "name": "Nathan TELA",
+            "location": "Lubumbashi"
+          },
+          {
+            "login": "lyabs243",
+            "name": "Loïc Yabili",
+            "location": "Lubumbashi - DR Congo"
+          },
+          {
+            "login": "gcharest",
+            "name": "Guillaume Charest",
+            "location": null
+          },
+          {
+            "login": "Bitonics",
+            "name": "Bitonics",
+            "location": null
+          },
+          {
+            "login": "bhdicaire",
+            "name": "BH Dicaire",
+            "location": "Montréal, Canada"
+          },
+          {
+            "login": "austinfrey",
+            "name": "",
+            "location": null
+          },
+          {
+            "login": "ezimic",
+            "name": "Michael Eziashi Osadebey",
+            "location": "Montreal, Canada"
+          },
+          {
+            "login": "mdupuis",
+            "name": "Maxime Dupuis",
+            "location": "Montreal, Qc, Canada"
+          },
+          {
+            "login": "ralphtheninja",
+            "name": "Lars-Magnus Skog",
+            "location": null
+          },
+          {
+            "login": "aral",
+            "name": "Aral Balkan",
+            "location": "Terra firma"
+          },
+          {
+            "login": "MichelleKwa",
+            "name": "MK",
+            "location": null
+          },
+          {
+            "login": "josephbreihan",
+            "name": "Joseph Breihan",
+            "location": "Montréal, Québec, Canada"
+          },
+          {
+            "login": "nschonni",
+            "name": "Nick Schonning",
+            "location": "Ottawa, Ontario, Canada"
+          },
+          {
+            "login": "vandrito",
+            "name": "Victor Andritoiu",
+            "location": "France"
+          },
+          {
+            "login": "jimpick",
+            "name": "Jim Pick",
+            "location": "Vancouver, BC, Canada"
+          },
+          {
+            "login": "rafmjr",
+            "name": "Rafael Antonio Mejía Rosales",
+            "location": "Montreal"
+          },
+          {
+            "login": "qaraluch",
+            "name": "arekG.",
+            "location": "Poland"
+          },
+          {
+            "login": "e-e-e",
+            "name": "Benjamin Forster",
+            "location": null
+          },
+          {
+            "login": "riabets",
+            "name": "Marina Riabets",
+            "location": "Kyiv, Ukraine"
+          },
+          {
+            "login": "louisgv",
+            "name": "L",
+            "location": null
+          },
+          {
+            "login": "biximilien",
+            "name": "Maxime Gauthier",
+            "location": "Gatineau, Québec, Canada"
+          },
+          {
+            "login": "m-onz",
+            "name": "monz",
+            "location": null
+          },
+          {
+            "login": "fmaldonadot",
+            "name": "Francisco Maldonado",
+            "location": "Montreal, Canada"
+          },
+          {
+            "login": "Jolg42",
+            "name": "Joël Galeran",
+            "location": "Paris, localhost"
+          },
+          {
+            "login": "nt2-syl",
+            "name": "Sylvain Aubé (NT2)",
+            "location": null
+          },
+          {
+            "login": "vashmata",
+            "name": "Joshua Glazer",
+            "location": "Montreal"
+          },
+          {
+            "login": "WinPhay",
+            "name": "Saw Win Phay",
+            "location": "Yangon, Myanmar"
+          },
+          {
+            "login": "jacquesroussel",
+            "name": "jacques roussel",
+            "location": "quebec"
+          },
+          {
+            "login": "dmikey",
+            "name": "Derek",
+            "location": "San Jose"
+          },
+          {
+            "login": "qqadssp",
+            "name": "Q. Chang",
+            "location": null
+          },
+          {
+            "login": "jwerle",
+            "name": "Joseph Werle",
+            "location": "nyc"
+          },
+          {
+            "login": "havasmtl-jbigeault",
+            "name": "Julien Bigeault",
+            "location": "Montreal"
+          },
+          {
+            "login": "MarkRecruteurMTL",
+            "name": "Mark-andre Tremblay",
+            "location": "Montréal"
+          },
+          {
+            "login": "MykeMachine",
+            "name": "Michael Lefebvre",
+            "location": "Desjardins Maniwaki Québec & Bank Royal of Ontario in the Canada"
+          },
+          {
+            "login": "miccomservices",
+            "name": "MiccomServicesAu",
+            "location": "Malaysia"
+          },
+          {
+            "login": "germancutraro",
+            "name": "Germán Cutraro",
+            "location": "Argentina, Buenos Aires"
+          },
+          {
+            "login": "KevinPFleury",
+            "name": "PFK",
+            "location": "Montreal"
+          },
+          {
+            "login": "edouardmenayde",
+            "name": "Edouard Menayde",
+            "location": "Lyon"
+          },
+          {
+            "login": "vhfmag",
+            "name": "Victor Magalhães",
+            "location": "Salvador, Brazil"
+          },
+          {
+            "login": "louiscenter",
+            "name": "LOUIS",
+            "location": "twitter.com/louiscenter"
+          },
+          {
+            "login": "amareti",
+            "name": null,
+            "location": null
+          },
+          {
+            "login": "lemonochrome",
+            "name": "Sylvain Aubé",
+            "location": "Montreal, QC"
+          },
+          {
+            "login": "aaahmadi",
+            "name": null,
+            "location": null
+          },
+          {
+            "login": "SaulDoesCode",
+            "name": "Saul van der Walt",
+            "location": "South Africa"
+          },
+          {
+            "login": "AntoineCharton",
+            "name": "Antoine Charton",
+            "location": "Montréal"
+          },
+          {
+            "login": "ngatilio",
+            "name": "LT",
+            "location": "Quebec"
+          },
+          {
+            "login": "lucidNTR",
+            "name": "Jan Johannes",
+            "location": "Berlin"
+          },
+          {
+            "login": "zaom01",
+            "name": "zaouali mohamed",
+            "location": null
+          },
+          {
+            "login": "specious",
+            "name": "Ildar Sagdejev",
+            "location": "Internet"
+          },
+          {
+            "login": "saurshaz",
+            "name": "saurshaz",
+            "location": "Goa, India"
+          },
+          {
+            "login": "ahmedzaaboub",
+            "name": "",
+            "location": "Tunisia"
+          },
+          {
+            "login": "bcomnes",
+            "name": "Bret Comnes",
+            "location": "Arcata, CA"
+          },
+          {
+            "login": "EzequielOlvera",
+            "name": "Ezequiel Olvera",
+            "location": "Los Angeles"
+          },
+          {
+            "login": "puneetkhanduri",
+            "name": "Puneet Khanduri",
+            "location": "San Francisco"
+          },
+          {
+            "login": "antidrugue",
+            "name": "Hugues Clouâtre",
+            "location": "Montreal, Canada"
+          },
+          {
+            "login": "beaulac",
+            "name": "antoine beauᵛᵃᴵˢ⁻lacᵃˢˢᵉ",
+            "location": "Montréal, QC"
+          },
+          {
+            "login": "opengiineer",
+            "name": "Engineer",
+            "location": "The Internet"
+          },
+          {
+            "login": "jindig",
+            "name": "Josh Indig",
+            "location": null
+          },
+          {
+            "login": "cquenneville",
+            "name": "Christopher Quenneville",
+            "location": "Montreal, QC, Canada"
+          },
+          {
+            "login": "l1kw1d",
+            "name": "L1kw1d",
+            "location": "Montreal, Qc"
+          },
+          {
+            "login": "cenaion",
+            "name": "Jessica Isterio Cena",
+            "location": "CA, USA"
+          },
+          {
+            "login": "mathieu-aubin",
+            "name": "Mathieu Aubin",
+            "location": "Montreal, Quebec, Canada"
+          },
+          {
+            "login": "azizgharbi",
+            "name": "aziz gharbi",
+            "location": "Montréal, Canada"
+          },
+          {
+            "login": "plaurin84",
+            "name": "Patrick Laurin",
+            "location": "Trois-Rivières"
+          },
+          {
+            "login": "dalinhuang99",
+            "name": "Dalin Huang",
+            "location": "Ottawa, ON, Canada"
+          },
+          {
+            "login": "geoffroigaron",
+            "name": "Geoffroi Garon-Épaule",
+            "location": "Montreal, Quebec, Canada"
+          },
+          {
+            "login": "zuizihad",
+            "name": "",
+            "location": "Dhaka"
+          },
+          {
+            "login": "titoc",
+            "name": "Tito Cheriachan",
+            "location": "Montreal"
+          },
+          {
+            "login": "nfultz",
+            "name": "Neal Fultz",
+            "location": "Los Angeles, CA"
+          },
+          {
+            "login": "RanaivosonHerimanitra",
+            "name": "Ranaivoson",
+            "location": "Québec"
+          },
+          {
+            "login": "NoxRacing",
+            "name": "Jimmy Béland-Bédard",
+            "location": "Shawinigan, Québec, Canada"
+          },
+          {
+            "login": "Elias33",
+            "name": "Elias Hossain",
+            "location": "Dhaka ,Bangladesh"
+          },
+          {
+            "login": "kroitor",
+            "name": "Igor Kroitor",
+            "location": "Russia, Moscow"
+          },
+          {
+            "login": "dancause",
+            "name": "JDancause",
+            "location": "Montréal, Québec"
+          },
+          {
+            "login": "YanBellavance",
+            "name": "YAN BELLAVANCE",
+            "location": "Montreal Canada"
+          },
+          {
+            "login": "mathieumg",
+            "name": "Mathieu M-Gosselin",
+            "location": "Montréal, Canada"
+          },
+          {
+            "login": "amicalmant",
+            "name": "Christian Aubry",
+            "location": "Canada"
+          },
+          {
+            "login": "rodmtl",
+            "name": "Rodrigo",
+            "location": "Montreal, QC"
+          },
+          {
+            "login": "deesims",
+            "name": "oleksandr hlovyak ",
+            "location": "Ottawa, Ontario"
+          },
+          {
+            "login": "SSaquif",
+            "name": "Sadnan Saquif",
+            "location": "Montreal"
+          },
+          {
+            "login": "thaiscav",
+            "name": "Thais Cavalcanti",
+            "location": "Montreal"
+          },
+          {
+            "login": "ghqc",
+            "name": "Utilisateurs du Québec",
+            "location": "Canada"
+          },
+          {
+            "login": "kareniel",
+            "name": "Jonathan Dupré",
+            "location": "Montreal, QC, Canada"
+          }
+        ]
+      }
+    }
+  }
+}

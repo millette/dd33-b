@@ -2,6 +2,8 @@
 
 import d3 from "./d3.js"
 
+console.log(process.env.HELLO)
+
 const svg = d3.select("svg")
 const width = +svg.attr("width")
 const height = +svg.attr("height")

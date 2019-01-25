@@ -16,6 +16,8 @@ const color = d3.scaleOrdinal(d3.schemeCategory10)
 const dataNodes = []
 const dataLinks = []
 
+const hereRe = /(montréal|montreal|mtl|yul)/
+
 const g = svg
   .append("g")
   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
@@ -44,11 +46,11 @@ const ticked = () => {
 
 const simulation = d3
   .forceSimulation(dataNodes)
-  .force("charge", d3.forceManyBody().strength(-100))
-  .force("link", d3.forceLink(dataLinks).distance(75))
+  .force("charge", d3.forceManyBody().strength(-115))
+  .force("link", d3.forceLink(dataLinks).distance(45))
   .force("x", d3.forceX())
   .force("y", d3.forceY())
-  .alphaTarget(1)
+  .alphaTarget(0.25)
   .on("tick", ticked)
 
 const makeUser = (d) => {
@@ -71,6 +73,15 @@ const restart = () => {
     .attr("fill", (d) => color(d.id))
     .attr("r", 8)
     .merge(node)
+    .on(
+      "click",
+      ({ id }) => {
+        console.log("CLICK-ID", id)
+        // fetchFollows(id)
+        fetchOne(id, hereRe)
+      },
+      { once: true, passive: true }
+    )
 
   // Apply the general update pattern to the links.
   link = link.data(dataLinks, (d) => d.source.id + "-" + d.target.id)
@@ -83,7 +94,7 @@ const restart = () => {
   // Update and restart the simulation.
   simulation.nodes(dataNodes)
   simulation.force("link").links(dataLinks)
-  simulation.alpha(1).restart()
+  simulation.alpha(0.25).restart()
 }
 
 restart()
@@ -101,8 +112,11 @@ const addLink = (source, target) =>
     (x) => x.source.id === source.id && x.target.id === target.id
   ) && dataLinks.push({ source, target })
 
-const fetchOne = (name, re) =>
-  ask(process.env.HELLO, name).then(
+const fetchOne = (name, re) => {
+  // stop after a little while
+  d3.timeout(() => simulation.stop(), 60000)
+
+  return ask(process.env.HELLO, name).then(
     ({
       data: {
         user: {
@@ -129,19 +143,19 @@ const fetchOne = (name, re) =>
       ])
     }
   )
-
-const hereRe = /(montréal|montreal|mtl|yul)/
+}
 
 const delayedFetch = (name, re, ms) => delay(ms).then(() => fetchOne(name, re))
 
-fetchOne("millette", hereRe)
-  .then((zzz) =>
-    Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, i * 200)))
-  )
-  .catch((e) => {
-    console.error(e)
-    simulation.stop()
-  })
+const fetchFollows = (name) =>
+  fetchOne(name, hereRe)
+    .then((zzz) =>
+      Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, i * 200)))
+    )
+    .catch((e) => {
+      console.error(e)
+      simulation.stop()
+    })
 
-// stop after a little while
-d3.timeout(() => simulation.stop(), 60000)
+// fetchFollows('millette')
+fetchOne("millette", hereRe)

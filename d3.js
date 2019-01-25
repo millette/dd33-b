@@ -1,3 +1,4 @@
+import { zoom } from "d3-zoom"
 import { drag } from "d3-drag"
 import { select } from "d3-selection"
 import { scaleOrdinal } from "d3-scale"
@@ -15,6 +16,7 @@ import {
 export { event as d3Event } from "d3-selection/src/selection/on"
 
 export default {
+  zoom,
   drag,
   select,
   scaleOrdinal,

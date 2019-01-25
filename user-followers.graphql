@@ -15,7 +15,7 @@ query Followers($login: String!) {
         endCursor
         hasNextPage
       }
-      nodes {
+      n2: nodes {
         login
         location
       }

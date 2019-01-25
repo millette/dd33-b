@@ -2,6 +2,7 @@
 
 // npm
 import delay from "delay"
+import uniq from "lodash.uniq"
 
 // self
 import ask from "./query.js"
@@ -107,6 +108,7 @@ const fetchOne = (name, re) =>
         user: {
           login: nameSource,
           followers: { nodes },
+          following: { n2 },
         },
       },
     }) => {
@@ -115,10 +117,16 @@ const fetchOne = (name, re) =>
         ({ location }) => location && re.test(location.toLowerCase())
       )
       nodes.forEach(({ login }) => addLink(source, addUser(login)))
-      console.log("dataNodes.length:", dataNodes.length)
-      console.log("dataLinks.length:", dataLinks.length)
+
+      n2 = n2.filter(
+        ({ location }) => location && re.test(location.toLowerCase())
+      )
+      n2.forEach(({ login }) => addLink(addUser(login), source))
       restart()
-      return nodes.map(({ login }) => login)
+      return uniq([
+        ...nodes.map(({ login }) => login),
+        ...n2.map(({ login }) => login),
+      ])
     }
   )
 
@@ -128,7 +136,7 @@ const delayedFetch = (name, re, ms) => delay(ms).then(() => fetchOne(name, re))
 
 fetchOne("millette", hereRe)
   .then((zzz) =>
-    Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, 500 + i * 500)))
+    Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, i * 200)))
   )
   .catch((e) => {
     console.error(e)

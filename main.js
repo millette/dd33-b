@@ -10,7 +10,24 @@ import "./tags/index.js"
 import ask from "./query.js"
 import d3, { d3Event } from "./d3.js"
 
-const svg = d3.select("svg")
+const dragRe = /^translate\((-{0,1}[0-9]+),(-{0,1}[0-9]+)\)$/
+
+const dragged = function() {
+  const oy = g.attr("transform")
+  const zz = oy && oy.match(dragRe)
+  const dx = zz && zz[1]
+  const dy = zz && zz[2]
+
+  if (dx && dy) {
+    const x = parseInt(dx, 10) + d3Event.dx
+    const y = parseInt(dy, 10) + d3Event.dy
+    g.attr("transform", `translate(${x},${y})`)
+  }
+  // console.log('dragged:', dx, dy, d3Event.dx, d3Event.dy)
+}
+
+const svg = d3.select("svg").call(d3.drag().on("drag", dragged))
+
 const width = +svg.attr("width")
 const height = +svg.attr("height")
 const color = d3.scaleOrdinal(d3.schemeCategory10)
@@ -22,7 +39,7 @@ const hereRe = /(montréal|montreal|mtl|yul)/
 
 const g = svg
   .append("g")
-  .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .attr("transform", `translate(${width / 2},${height / 2})`)
 
 let link = g
   .append("g")

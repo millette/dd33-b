@@ -8,7 +8,7 @@ import riot from "riot"
 // self
 import "./tags/index.js"
 import ask from "./query.js"
-import d3 from "./d3.js"
+import d3, { d3Event } from "./d3.js"
 
 const svg = d3.select("svg")
 const width = +svg.attr("width")
@@ -71,17 +71,13 @@ const restart = () => {
   node = node
     .enter()
     .append(makeUser)
-    .attr("title", (d) => d.id)
     .attr("fill", (d) => color(d.id))
     .attr("r", 12)
     .merge(node)
     .on(
       "click",
-      ({ id }) => {
-        // fetchFollows(id)
-        fetchOne(id, hereRe)
-      },
-      { once: true, passive: true }
+      ({ id }) => (d3Event.shiftKey ? fetchFollows(id) : fetchOne(id, hereRe)),
+      { capture: false, once: true, passive: true }
     )
 
   // Apply the general update pattern to the links.
@@ -155,7 +151,7 @@ const delayedFetch = (name, re, ms) => delay(ms).then(() => fetchOne(name, re))
 const fetchFollows = (name) =>
   fetchOne(name, hereRe)
     .then((zzz) =>
-      Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, i * 200)))
+      Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, 1000 + i * 500)))
     )
     .catch((e) => {
       console.error(e)

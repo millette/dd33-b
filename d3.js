@@ -10,6 +10,9 @@ import {
   forceSimulation,
 } from "d3-force"
 
+// Needed for live binding (d3.event is manipulated during use)
+export { event as d3Event } from "d3-selection/src/selection/on"
+
 export default {
   select,
   scaleOrdinal,

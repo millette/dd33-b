@@ -4,7 +4,7 @@
     nLinks: {nLinks}<br />
     cost: {rateLimit.cost}<br />
     remaining: {rateLimit.remaining}<br />
-    reset at: {new Date(rateLimit.resetAt)}
+    reset at: {new Date(rateLimit.resetAt || 0)}
   </p>
 
   <script>

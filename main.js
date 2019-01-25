@@ -3,8 +3,10 @@
 // npm
 import delay from "delay"
 import uniq from "lodash.uniq"
+import riot from "riot"
 
 // self
+import "./tags/index.js"
 import ask from "./query.js"
 import d3 from "./d3.js"
 
@@ -46,8 +48,8 @@ const ticked = () => {
 
 const simulation = d3
   .forceSimulation(dataNodes)
-  .force("charge", d3.forceManyBody().strength(-115))
-  .force("link", d3.forceLink(dataLinks).distance(45))
+  .force("charge", d3.forceManyBody().strength(-200))
+  .force("link", d3.forceLink(dataLinks).distance(48))
   .force("x", d3.forceX())
   .force("y", d3.forceY())
   .alphaTarget(0.25)
@@ -71,7 +73,7 @@ const restart = () => {
     .append(makeUser)
     .attr("title", (d) => d.id)
     .attr("fill", (d) => color(d.id))
-    .attr("r", 8)
+    .attr("r", 12)
     .merge(node)
     .on(
       "click",
@@ -94,7 +96,7 @@ const restart = () => {
   // Update and restart the simulation.
   simulation.nodes(dataNodes)
   simulation.force("link").links(dataLinks)
-  simulation.alpha(0.25).restart()
+  simulation.alpha(0.75).restart()
 }
 
 restart()
@@ -159,3 +161,5 @@ const fetchFollows = (name) =>
 
 // fetchFollows('millette')
 fetchOne("millette", hereRe)
+
+riot.mount("app", { dataNodes, dataLinks })

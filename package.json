@@ -23,7 +23,9 @@
     "d3-selection": "^1.4.0",
     "d3-timer": "^1.0.9",
     "delay": "^4.1.0",
-    "lodash.uniq": "^4.5.0"
+    "lodash.uniq": "^4.5.0",
+    "parcel-plugin-tag": "^1.1.0",
+    "riot": "^3.13.2"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1",
@@ -36,7 +38,7 @@
     "prettier": "^1.16.0"
   },
   "lint-staged": {
-    "*.{js,json,md,html,graphql,scss}": [
+    "*.{js,json,md,html,graphql,tag,scss}": [
       "prettier --write",
       "git add"
     ]
@@ -49,6 +51,14 @@
   "prettier": {
     "semi": false,
     "trailingComma": "es5",
-    "arrowParens": "always"
+    "arrowParens": "always",
+    "overrides": [
+      {
+        "files": "tags/*.tag",
+        "options": {
+          "parser": "html"
+        }
+      }
+    ]
   }
 }

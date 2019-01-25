@@ -17,4 +17,9 @@ export default (token, login) =>
       authorization: `bearer ${token}`,
     },
     body: JSON.stringify({ query, variables: { login } }),
-  }).then((res) => res.json())
+  }).then((res) => {
+    if (res.ok) return res.json()
+    const err = new Error("Github query error")
+    err.more = { ...res }
+    throw err
+  })

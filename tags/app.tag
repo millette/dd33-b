@@ -2,11 +2,15 @@
   <p>
     nNodes: {nNodes}<br />
     nLinks: {nLinks}<br />
+    cost: {rateLimit.cost}<br />
+    remaining: {rateLimit.remaining}<br />
+    reset at: {new Date(rateLimit.resetAt)}
   </p>
 
   <script>
     this.nNodes = 0
     this.nLinks = 0
+    this.rateLimit = {}
 
     const i = setInterval(() => {
       const on = this.nNodes

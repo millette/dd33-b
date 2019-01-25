@@ -78,7 +78,6 @@ const restart = () => {
     .on(
       "click",
       ({ id }) => {
-        console.log("CLICK-ID", id)
         // fetchFollows(id)
         fetchOne(id, hereRe)
       },
@@ -114,6 +113,8 @@ const addLink = (source, target) =>
     (x) => x.source.id === source.id && x.target.id === target.id
   ) && dataLinks.push({ source, target })
 
+const elApp = riot.mount("app", { dataNodes, dataLinks, rateLimit: {} })[0]
+
 const fetchOne = (name, re) => {
   // stop after a little while
   d3.timeout(() => simulation.stop(), 60000)
@@ -121,6 +122,7 @@ const fetchOne = (name, re) => {
   return ask(process.env.HELLO, name).then(
     ({
       data: {
+        rateLimit,
         user: {
           login: nameSource,
           followers: { nodes },
@@ -139,6 +141,7 @@ const fetchOne = (name, re) => {
       )
       n2.forEach(({ login }) => addLink(addUser(login), source))
       restart()
+      elApp.rateLimit = rateLimit
       return uniq([
         ...nodes.map(({ login }) => login),
         ...n2.map(({ login }) => login),
@@ -161,5 +164,3 @@ const fetchFollows = (name) =>
 
 // fetchFollows('millette')
 fetchOne("millette", hereRe)
-
-riot.mount("app", { dataNodes, dataLinks })

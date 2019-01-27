@@ -1,7 +1,4 @@
 <app>
-  <p if="{error}">
-    {error}
-  </p>
   <form onSubmit="{addUser}">
     <label
       >Username:
@@ -23,12 +20,19 @@
     </label>
   </form>
 
+  <p if="{error}">
+    {error}
+  </p>
+
   <p>
-    nNodes: {nNodes}<br />
-    nLinks: {nLinks}<br />
-    cost: {rateLimit.cost}<br />
-    remaining: {rateLimit.remaining}<br />
-    reset at: {new Date(rateLimit.resetAt || 0)}
+    Nombre d'utilisateurs: {nNodes}<br />
+    Nombre de liens: {nLinks}<br />
+    <virtual if="{rateLimit}">
+      coût: {rateLimit.cost}<br />
+      balance: {rateLimit.remaining}<br />
+      <i>reset</i> dans environ {new Date(Date.parse(rateLimit.resetAt) -
+      Date.now()).getUTCMinutes()} minutes
+    </virtual>
   </p>
 
   <p if="{locations && locations.length}">
@@ -46,7 +50,6 @@
     this.error = false
     this.nNodes = 0
     this.nLinks = 0
-    this.rateLimit = {}
 
     const name = window.location.hash.slice(1)
     if (name) {

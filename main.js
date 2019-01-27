@@ -197,4 +197,4 @@ riot.mixin({
   uniq,
 })
 
-const elApp = riot.mount("app", { dataNodes, dataLinks, rateLimit: {} })[0]
+const elApp = riot.mount("app", { dataNodes, dataLinks })[0]

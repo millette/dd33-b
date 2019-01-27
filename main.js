@@ -75,16 +75,23 @@ const ticked = () => {
 const simulation = d3
   .forceSimulation(dataNodes)
   .force("charge", d3.forceManyBody().strength(-200))
-  .force("link", d3.forceLink(dataLinks).distance(80))
+  .force("link", d3.forceLink(dataLinks).distance(90))
   .force("x", d3.forceX())
   .force("y", d3.forceY())
   .alphaTarget(0.25)
   .on("tick", ticked)
 
 const makeUser = (d) => {
-  console.log("makeUser:", d)
+  // console.log("makeUser:", d)
   const c = document.createElementNS("http://www.w3.org/2000/svg", "circle")
+  // const c = document.createElementNS("http://www.w3.org/2000/svg", "image")
   const t = document.createElementNS("http://www.w3.org/2000/svg", "title")
+
+  /*
+  c.width = 48
+  c.height = 48
+  c['xlink:href'] = d.avatar
+  */
 
   /*
    */
@@ -115,7 +122,7 @@ const makeUser = (d) => {
     .attr("id", `img${d.id}`)
     .attr("x", "0")
     .attr("y", "0")
-    .attr("patternUnits", "userSpaceOnUse")
+    // .attr("patternUnits", "objectBoundingBox")
     .attr("height", "32")
     .attr("width", "32")
     .append("image")
@@ -148,7 +155,7 @@ const restart = () => {
     .append(makeUser)
     // .attr("fill", (d) => color(d.id))
     .attr("fill", (d) => `url(#img${d.id})`)
-    .attr("r", 15)
+    .attr("r", 16)
     .merge(node)
     .on(
       "click",

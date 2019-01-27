@@ -9,7 +9,7 @@ query Followers($login: String!) {
   user(login: $login) {
     login
     location
-    avatarUrl(size: 48)
+    avatarUrl(size: 16)
     following(first: 100) {
       totalCount
       pageInfo {
@@ -19,7 +19,7 @@ query Followers($login: String!) {
       n2: nodes {
         login
         location
-        avatarUrl(size: 48)
+        avatarUrl(size: 16)
       }
     }
     followers(first: 100) {
@@ -31,7 +31,7 @@ query Followers($login: String!) {
       nodes {
         login
         location
-        avatarUrl(size: 48)
+        avatarUrl(size: 16)
       }
     }
   }

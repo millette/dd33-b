@@ -116,11 +116,13 @@ const makeUser = (d) => {
     .attr("x", "0")
     .attr("y", "0")
     .attr("patternUnits", "userSpaceOnUse")
-    .attr("height", "1")
-    .attr("width", "1")
+    .attr("height", "16")
+    .attr("width", "16")
     .append("image")
-    .attr("width", "48")
-    .attr("height", "48")
+    .attr("x", "0")
+    .attr("y", "0")
+    .attr("width", "16")
+    .attr("height", "16")
     .attr("xlink:href", d.avatar)
 
   /*

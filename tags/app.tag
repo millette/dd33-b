@@ -20,6 +20,11 @@
     </label>
   </form>
 
+  <label>
+    Affichage léger
+    <input checked onChange="{toggleLight}" type="checkbox" ref="light" />
+  </label>
+
   <p if="{error}">
     {error}
   </p>
@@ -47,6 +52,8 @@
         ? `(${this.locations.join('|')})`
         : ''
     )
+
+    this.light = true
     this.error = false
     this.nNodes = 0
     this.nLinks = 0
@@ -57,6 +64,10 @@
         .then(() => this.error = false)
         .catch((e) => this.error = e)
         .then(() => this.update())
+    }
+
+    toggleLight() {
+      this.light = this.refs.light.checked
     }
 
     resetLocations(ev) {

@@ -2,12 +2,13 @@
   <p if="{error}">
     {error}
   </p>
-  <form onSubmit="{clicky}">
+  <form onSubmit="{addUser}">
     <label
       >Username:
       <input ref="username" type="text" />
     </label>
   </form>
+  <button onClick="{resetGraph}">Reset</button>
   <p>
     nNodes: {nNodes}<br />
     nLinks: {nLinks}<br />
@@ -24,9 +25,12 @@
     this.nLinks = 0
     this.rateLimit = {}
 
-    clicky(ev) {
+    resetGraph(ev) {
+      this.clearGraph()
+    }
+
+    addUser(ev) {
       ev.preventDefault()
-      // console.log('clicky:', ev, this.refs.username.value)
       const val = this.refs.username.value.trim()
       if (!val) return
       this.refs.username.value = ''

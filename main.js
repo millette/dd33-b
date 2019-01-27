@@ -182,9 +182,16 @@ const fetchFollows = (name) =>
       simulation.stop()
     })
 
+const clearGraph = () => {
+  dataNodes.length = 0
+  dataLinks.length = 0
+  restart()
+}
+
 riot.mixin({
   fetchFollows,
   fetchOne,
+  clearGraph,
 })
 
 const elApp = riot.mount("app", { dataNodes, dataLinks, rateLimit: {} })[0]

@@ -135,8 +135,6 @@ const addLink = (source, target) =>
     (x) => x.source.id === source.id && x.target.id === target.id
   ) && dataLinks.push({ source, target })
 
-const elApp = riot.mount("app", { dataNodes, dataLinks, rateLimit: {} })[0]
-
 const fetchOne = (name, re) => {
   // stop after a little while
   d3.timeout(() => simulation.stop(), 60000)
@@ -184,5 +182,12 @@ const fetchFollows = (name) =>
       simulation.stop()
     })
 
+riot.mixin({
+  fetchFollows,
+  fetchOne,
+})
+
+const elApp = riot.mount("app", { dataNodes, dataLinks, rateLimit: {} })[0]
+
 // fetchFollows('millette')
-fetchOne("millette", hereRe)
+// fetchOne("jhroy", hereRe)

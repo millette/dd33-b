@@ -17,9 +17,15 @@ export default (token, login) =>
       authorization: `bearer ${token}`,
     },
     body: JSON.stringify({ query, variables: { login } }),
-  }).then((res) => {
-    if (res.ok) return res.json()
-    const err = new Error("Github query error")
-    err.more = { ...res }
-    throw err
   })
+    .then((res) => {
+      if (res.ok) return res.json()
+      const err = new Error("Github query error")
+      err.more = { ...res }
+      throw err
+    })
+    .then((json) => {
+      if (json.errors && json.errors[0]) throw new Error(json.errors[0].message)
+      if (json.data.user) return json
+      throw new Error("Unexpected fetch error.")
+    })

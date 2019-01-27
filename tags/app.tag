@@ -7,8 +7,12 @@
       >Username:
       <input ref="username" type="text" />
     </label>
+    <button>Charger l'utilisateur (ou faire <keyb>Enter</keyb>)</button>
+    <button onClick="{addUsers}">
+      Charger l'utilisateur et ses <i>follows</i>
+    </button>
   </form>
-  <button type="button" onClick="{resetGraph}">Reset</button>
+  <button type="button" onClick="{resetGraph}">Effacer le graphe</button>
   <p>
     nNodes: {nNodes}<br />
     nLinks: {nLinks}<br />
@@ -35,6 +39,17 @@
 
     resetGraph(ev) {
       this.clearGraph()
+    }
+
+    addUsers(ev) {
+      ev.preventDefault()
+      const val = this.refs.username.value.trim()
+      if (!val) return
+      this.refs.username.value = ''
+      this.fetchFollows(val, hereRe)
+        .then(() => this.error = false)
+        .catch((e) => this.error = e)
+        .then(() => this.update())
     }
 
     addUser(ev) {

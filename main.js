@@ -102,7 +102,8 @@ const restart = () => {
     .merge(node)
     .on(
       "click",
-      ({ id }) => (d3Event.shiftKey ? fetchFollows(id) : fetchOne(id, hereRe)),
+      ({ id }) =>
+        d3Event.shiftKey ? fetchFollows(id, hereRe) : fetchOne(id, hereRe),
       { capture: false, once: true, passive: true }
     )
 
@@ -172,10 +173,10 @@ const fetchOne = (name, re) => {
 
 const delayedFetch = (name, re, ms) => delay(ms).then(() => fetchOne(name, re))
 
-const fetchFollows = (name) =>
-  fetchOne(name, hereRe)
+const fetchFollows = (name, re) =>
+  fetchOne(name, re)
     .then((zzz) =>
-      Promise.all(zzz.map((u, i) => delayedFetch(u, hereRe, 1000 + i * 500)))
+      Promise.all(zzz.map((u, i) => delayedFetch(u, re, 1000 + i * 500)))
     )
     .catch((e) => {
       console.error(e)
@@ -195,6 +196,3 @@ riot.mixin({
 })
 
 const elApp = riot.mount("app", { dataNodes, dataLinks, rateLimit: {} })[0]
-
-// fetchFollows('millette')
-// fetchOne("jhroy", hereRe)

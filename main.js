@@ -119,8 +119,8 @@ const makeUser = (d) => {
     .attr("height", "1")
     .attr("width", "1")
     .append("image")
-    .attr("x", "48")
-    .attr("y", "48")
+    .attr("width", "48")
+    .attr("height", "48")
     .attr("xlink:href", d.avatar)
 
   /*

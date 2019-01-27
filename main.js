@@ -82,14 +82,13 @@ const simulation = d3
 const makeUser = (d) => {
   const c = document.createElementNS("http://www.w3.org/2000/svg", "circle")
   const t = document.createElementNS("http://www.w3.org/2000/svg", "title")
-  t.textContent = d.id
+  t.textContent = `${d.id}${d.location ? ` @ ${d.location}` : ""}`
   c.appendChild(t)
   return c
 }
 
 const restart = () => {
   // Apply the general update pattern to the nodes.
-  // node = node.data(nodes, (d) => d.id)
   node = node.data(dataNodes)
   node.exit().remove()
   node = node
@@ -123,10 +122,10 @@ const restart = () => {
 
 restart()
 
-const addUser = (username) => {
+const addUser = (username, location) => {
   const found = dataNodes.find((x) => x.id === username)
   if (found) return found
-  const it = { id: username }
+  const it = { id: username, location }
   dataNodes.push(it)
   return it
 }
@@ -146,16 +145,19 @@ const fetchOne = (name, re) => {
         rateLimit,
         user: {
           login: nameSource,
+          location: locationSource,
           followers: { nodes },
           following: { n2 },
         },
       },
     }) => {
-      const source = addUser(nameSource)
+      const source = addUser(nameSource, locationSource)
       nodes = nodes.filter(
         ({ location }) => location && re.test(location.toLowerCase())
       )
-      nodes.forEach(({ login }) => addLink(source, addUser(login)))
+      nodes.forEach(({ login, location }) =>
+        addLink(source, addUser(login, location))
+      )
 
       n2 = n2.filter(
         ({ location }) => location && re.test(location.toLowerCase())

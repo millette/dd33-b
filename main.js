@@ -75,7 +75,7 @@ const ticked = () => {
 const simulation = d3
   .forceSimulation(dataNodes)
   .force("charge", d3.forceManyBody().strength(-200))
-  .force("link", d3.forceLink(dataLinks).distance(48))
+  .force("link", d3.forceLink(dataLinks).distance(80))
   .force("x", d3.forceX())
   .force("y", d3.forceY())
   .alphaTarget(0.25)
@@ -116,13 +116,13 @@ const makeUser = (d) => {
     .attr("x", "0")
     .attr("y", "0")
     .attr("patternUnits", "userSpaceOnUse")
-    .attr("height", "16")
-    .attr("width", "16")
+    .attr("height", "32")
+    .attr("width", "32")
     .append("image")
     .attr("x", "0")
     .attr("y", "0")
-    .attr("width", "16")
-    .attr("height", "16")
+    .attr("width", "32")
+    .attr("height", "32")
     .attr("xlink:href", d.avatar)
 
   /*
@@ -148,7 +148,7 @@ const restart = () => {
     .append(makeUser)
     // .attr("fill", (d) => color(d.id))
     .attr("fill", (d) => `url(#img${d.id})`)
-    .attr("r", 12)
+    .attr("r", 15)
     .merge(node)
     .on(
       "click",

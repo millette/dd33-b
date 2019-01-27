@@ -8,7 +8,7 @@
       <input ref="username" type="text" />
     </label>
   </form>
-  <button onClick="{resetGraph}">Reset</button>
+  <button type="button" onClick="{resetGraph}">Reset</button>
   <p>
     nNodes: {nNodes}<br />
     nLinks: {nLinks}<br />
@@ -19,6 +19,14 @@
 
   <script>
     const hereRe = /(montréal|montreal|mtl|yul)/
+
+    const name = window.location.hash.slice(1)
+    if (name) {
+      this.fetchOne(name, hereRe)
+        .then(() => this.error = false)
+        .catch((e) => this.error = e)
+        .then(() => this.update())
+    }
 
     this.error = false
     this.nNodes = 0

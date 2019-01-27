@@ -2,7 +2,7 @@
 
 // npm
 import delay from "delay"
-import uniq from "lodash.uniq"
+import { deburr, uniq } from "lodash-es"
 import riot from "riot"
 
 // self
@@ -43,8 +43,6 @@ const color = d3.scaleOrdinal(d3.schemeCategory10)
 
 const dataNodes = []
 const dataLinks = []
-
-const hereRe = /(montréal|montreal|mtl|yul)/
 
 const g = svg
   .append("g")
@@ -102,8 +100,10 @@ const restart = () => {
     .merge(node)
     .on(
       "click",
-      ({ id }) =>
-        d3Event.shiftKey ? fetchFollows(id, hereRe) : fetchOne(id, hereRe),
+      ({ id, ...rest }) => {
+        if (d3Event.shiftKey) fetchFollows(id, elApp.hereRe)
+        else fetchOne(id, elApp.hereRe)
+      },
       { capture: false, once: true, passive: true }
     )
 
@@ -193,6 +193,8 @@ riot.mixin({
   fetchFollows,
   fetchOne,
   clearGraph,
+  deburr,
+  uniq,
 })
 
 const elApp = riot.mount("app", { dataNodes, dataLinks, rateLimit: {} })[0]

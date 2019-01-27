@@ -37,6 +37,7 @@
   </p>
 
   <script>
+    this.locations = ['québec', 'quebec', 'qc']
     this.hereRe = new RegExp(
       this.locations && this.locations.length
         ? `(${this.locations.join('|')})`

@@ -37,6 +37,8 @@ const svg = d3
   .call(d3.drag().on("drag", dragged))
   .call(d3.zoom().on("zoom", zoomed))
 
+const svgDefs = svg.append("defs")
+
 const width = parseInt(svg.attr("width"), 10)
 const height = parseInt(svg.attr("height"), 10)
 const color = d3.scaleOrdinal(d3.schemeCategory10)
@@ -56,7 +58,7 @@ let link = g
 
 let node = g
   .append("g")
-  .attr("stroke", "#fff")
+  .attr("stroke", "#48f")
   .attr("stroke-width", 2)
   .selectAll(".node")
 
@@ -80,9 +82,57 @@ const simulation = d3
   .on("tick", ticked)
 
 const makeUser = (d) => {
+  console.log("makeUser:", d)
   const c = document.createElementNS("http://www.w3.org/2000/svg", "circle")
   const t = document.createElementNS("http://www.w3.org/2000/svg", "title")
+
+  /*
+   */
+
+  /*
+
+  <defs>
+    <pattern id="image" x="0" y="0" patternUnits="userSpaceOnUse" height="1" width="1">
+      <image x="0" y="0" xlink:href="url.png"></image>
+    </pattern>
+  </defs>
+
+*/
+
+  // c.fill = `url(#img-${d.id})`
+
+  // console.log('svgDefs:', svgDefs)
+
+  /*
+  const img = document.createElementNS("http://www.w3.org/2000/svg http://www.w3.org/1999/xlink", "image")
+  img.width = 48
+  img.height = 48
+  img['xlink:href'] = d.avatar
+  */
+
+  svgDefs
+    .append("pattern")
+    .attr("id", `img${d.id}`)
+    .attr("x", "0")
+    .attr("y", "0")
+    .attr("patternUnits", "userSpaceOnUse")
+    .attr("height", "1")
+    .attr("width", "1")
+    .append("image")
+    .attr("x", "48")
+    .attr("y", "48")
+    .attr("xlink:href", d.avatar)
+
+  /*
+  svgDefs.append(`
+   <pattern id="img-${d.id}" x="0" y="0" patternUnits="userSpaceOnUse" height="1" width="1">
+      <image x="0" y="0" xlink:href="${d.avatar}"></image>
+    </pattern>
+  `)
+  */
+
   t.textContent = `${d.id}${d.location ? ` @ ${d.location}` : ""}`
+  // t.appendChild(img)
   c.appendChild(t)
   return c
 }
@@ -94,7 +144,8 @@ const restart = () => {
   node = node
     .enter()
     .append(makeUser)
-    .attr("fill", (d) => color(d.id))
+    // .attr("fill", (d) => color(d.id))
+    .attr("fill", (d) => `url(#img${d.id})`)
     .attr("r", 12)
     .merge(node)
     .on(
@@ -122,10 +173,10 @@ const restart = () => {
 
 restart()
 
-const addUser = (username, location) => {
+const addUser = (username, location, avatar) => {
   const found = dataNodes.find((x) => x.id === username)
   if (found) return found
-  const it = { id: username, location }
+  const it = { id: username, location, avatar }
   dataNodes.push(it)
   return it
 }
@@ -146,23 +197,26 @@ const fetchOne = (name, re) => {
         user: {
           login: nameSource,
           location: locationSource,
+          avatarUrl: avatarUrlSource,
           followers: { nodes },
           following: { n2 },
         },
       },
     }) => {
-      const source = addUser(nameSource, locationSource)
+      const source = addUser(nameSource, locationSource, avatarUrlSource)
       nodes = nodes.filter(
         ({ location }) => location && re.test(location.toLowerCase())
       )
-      nodes.forEach(({ login, location }) =>
-        addLink(source, addUser(login, location))
+      nodes.forEach(({ login, location, avatarUrl }) =>
+        addLink(source, addUser(login, location, avatarUrl))
       )
 
       n2 = n2.filter(
         ({ location }) => location && re.test(location.toLowerCase())
       )
-      n2.forEach(({ login }) => addLink(addUser(login), source))
+      n2.forEach(({ login, location, avatarUrl }) =>
+        addLink(addUser(login, location, avatarUrl), source)
+      )
       restart()
       elApp.rateLimit = rateLimit
       return uniq([

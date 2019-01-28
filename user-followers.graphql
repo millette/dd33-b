@@ -1,4 +1,8 @@
-query Followers($login: String!) {
+query Followers(
+  $login: String!
+  $followingAfter: String
+  $followersAfter: String
+) {
   rateLimit {
     cost
     limit
@@ -10,7 +14,8 @@ query Followers($login: String!) {
     login
     location
     avatarUrl(size: 32)
-    following(first: 100) {
+    createdAt
+    following(first: 100, after: $followingAfter) {
       totalCount
       pageInfo {
         endCursor
@@ -20,9 +25,10 @@ query Followers($login: String!) {
         login
         location
         avatarUrl(size: 32)
+        createdAt
       }
     }
-    followers(first: 100) {
+    followers(first: 100, after: $followersAfter) {
       totalCount
       pageInfo {
         endCursor
@@ -32,6 +38,7 @@ query Followers($login: String!) {
         login
         location
         avatarUrl(size: 32)
+        createdAt
       }
     }
   }

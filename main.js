@@ -39,8 +39,6 @@ const svg = d3
 
 const svgDefs = svg.append("defs")
 
-// const width = parseInt(svg.attr("width"), 10)
-// const height = parseInt(svg.attr("height"), 10)
 const width = 1000
 const height = 500
 const color = d3.scaleOrdinal(d3.schemeCategory10)
@@ -84,40 +82,8 @@ const simulation = d3
   .on("tick", ticked)
 
 const makeUser = (d) => {
-  // console.log("makeUser:", d)
   const c = document.createElementNS("http://www.w3.org/2000/svg", "circle")
-  // const c = document.createElementNS("http://www.w3.org/2000/svg", "image")
   const t = document.createElementNS("http://www.w3.org/2000/svg", "title")
-
-  /*
-  c.width = 48
-  c.height = 48
-  c['xlink:href'] = d.avatar
-  */
-
-  /*
-   */
-
-  /*
-
-  <defs>
-    <pattern id="image" x="0" y="0" patternUnits="userSpaceOnUse" height="1" width="1">
-      <image x="0" y="0" xlink:href="url.png"></image>
-    </pattern>
-  </defs>
-
-*/
-
-  // c.fill = `url(#img-${d.id})`
-
-  // console.log('svgDefs:', svgDefs)
-
-  /*
-  const img = document.createElementNS("http://www.w3.org/2000/svg http://www.w3.org/1999/xlink", "image")
-  img.width = 48
-  img.height = 48
-  img['xlink:href'] = d.avatar
-  */
 
   svgDefs
     .append("pattern")
@@ -130,16 +96,7 @@ const makeUser = (d) => {
     .attr("height", "32")
     .attr("xlink:href", d.avatar)
 
-  /*
-  svgDefs.append(`
-   <pattern id="img-${d.id}" x="0" y="0" patternUnits="userSpaceOnUse" height="1" width="1">
-      <image x="0" y="0" xlink:href="${d.avatar}"></image>
-    </pattern>
-  `)
-  */
-
   t.textContent = `${d.id}${d.location ? ` @ ${d.location}` : ""}`
-  // t.appendChild(img)
   c.appendChild(t)
   return c
 }
@@ -151,7 +108,6 @@ const restart = () => {
   node = node
     .enter()
     .append(makeUser)
-    // .attr("fill", (d) => color(d.id))
     .attr("fill", (d) => `url(#img-${d.id})`)
     .attr("r", 16)
     .merge(node)

@@ -64,6 +64,8 @@
     ]
   },
   "browserslist": [
-    "last 1 Chrome version"
+    ">0.5%",
+    "not ie 11",
+    "not op_mini all"
   ]
 }

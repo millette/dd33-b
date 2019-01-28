@@ -121,7 +121,7 @@ const makeUser = (d) => {
 
   svgDefs
     .append("pattern")
-    .attr("id", `img${d.id}`)
+    .attr("id", `img-${d.id}`)
     .attr("patternUnits", elApp.light ? "userSpaceOnUse" : "objectBoundingBox")
     .attr("height", "32")
     .attr("width", "32")
@@ -152,7 +152,7 @@ const restart = () => {
     .enter()
     .append(makeUser)
     // .attr("fill", (d) => color(d.id))
-    .attr("fill", (d) => `url(#img${d.id})`)
+    .attr("fill", (d) => `url(#img-${d.id})`)
     .attr("r", 16)
     .merge(node)
     .on(

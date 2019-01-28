@@ -80,9 +80,12 @@
         </p>
       </div>
 
-      <p if="{locations && locations.length}">
-        <b>Lieux:</b> {locations.join(', ')}<br />
-      </p>
+      <div class="tags" if="{locations && locations.length}">
+        <span class="tag is-info">Lieux:</span>
+        <span each="{t, i in locations}" key="{i}" class="tag is-rounded">
+          {t}
+        </span>
+      </div>
 
       <p>
         <b>Nombre d'utilisateurs:</b> {nNodes}<br />
@@ -158,12 +161,6 @@
       this.fetchFollows(val, this.hereRe)
         .then(() => this.update({ error: false }))
         .catch((e) => this.update({ error: e }))
-
-        /*
-        .then(() => this.error = false)
-        .catch((e) => this.error = e)
-        .then(() => this.update())
-        */
     }
 
     addUser(ev) {
@@ -174,12 +171,6 @@
       this.fetchOne(val, this.hereRe)
         .then(() => this.update({ error: false }))
         .catch((e) => this.update({ error: e }))
-
-        /*
-        .then(() => this.error = false)
-        .catch((e) => this.error = e)
-        .then(() => this.update())
-        */
     }
 
     const i = setInterval(() => {
@@ -190,4 +181,10 @@
       if (on !== this.nNodes || ol !== this.nLinks) this.update()
     }, 500)
   </script>
+
+  <style>
+    .tags:not(:last-child) {
+      margin-bottom: 0;
+    }
+  </style>
 </app>

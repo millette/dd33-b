@@ -1,9 +1,9 @@
 // npm
-import delay from "./delay.js"
 import { print } from "graphql/language/printer"
 
 // self
 import followsQuery from "./user-followers.graphql"
+import delay from "./delay.js"
 
 const query = print(followsQuery)
 

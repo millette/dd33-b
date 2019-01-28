@@ -1,12 +1,12 @@
 // taken from https://bl.ocks.org/mbostock/1095795
 
 // npm
-import delay from "./delay.js"
 import { deburr, uniq } from "lodash-es"
 import riot from "riot"
 
 // self
 import "./tags/index.js"
+import delay from "./delay.js"
 import ask from "./query.js"
 import d3, { d3Event } from "./d3.js"
 

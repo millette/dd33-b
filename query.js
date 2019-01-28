@@ -1,5 +1,5 @@
 // npm
-import delay from "delay"
+import delay from "./delay.js"
 import { print } from "graphql/language/printer"
 
 // self

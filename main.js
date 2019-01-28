@@ -1,7 +1,7 @@
 // taken from https://bl.ocks.org/mbostock/1095795
 
 // npm
-import delay from "delay"
+import delay from "./delay.js"
 import { deburr, uniq } from "lodash-es"
 import riot from "riot"
 
@@ -193,11 +193,12 @@ const delayedFetch = (name, re, ms) => delay(ms).then(() => fetchOne(name, re))
 const fetchFollows = (name, re) =>
   fetchOne(name, re)
     .then((zzz) =>
-      Promise.all(zzz.map((u, i) => delayedFetch(u, re, 1000 + i * 500)))
+      Promise.all(zzz.map((u, i) => delayedFetch(u, re, 200 + i * 400)))
     )
     .catch((e) => {
       console.error(e)
       simulation.stop()
+      throw e
     })
 
 const clearGraph = () => {

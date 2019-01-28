@@ -1,49 +1,100 @@
 <app>
-  <form onSubmit="{addUser}">
-    <label
-      >Username:
-      <input ref="username" type="text" />
-    </label>
-    <button>Charger l'utilisateur (ou faire <keyb>Enter</keyb>)</button>
-    <button onClick="{addUsers}">
-      Charger l'utilisateur et ses <i>follows</i>
-    </button>
-  </form>
-  <button if="{nNodes}" type="button" onClick="{resetGraph}">
-    Effacer le graphe
-  </button>
+  <div class="columns">
+    <div class="column">
+      <form onSubmit="{addUser}">
+        <div class="field is-grouped">
+          <p class="control">
+            <input
+              class="input"
+              placeholder="Utilisateur"
+              ref="username"
+              type="text"
+            />
+          </p>
+          <p class="control">
+            <button class="button is-primary" title="(ou faire Enter)">
+              Ajouter
+            </button>
+          </p>
+          <p class="control">
+            <button class="button is-warning" onClick="{addUsers}">
+              Avec ses <i>follows</i>
+            </button>
+          </p>
+          <p class="control">
+            <button
+              class="button is-danger"
+              if="{nNodes}"
+              type="button"
+              onClick="{resetGraph}"
+            >
+              Effacer le graphe
+            </button>
+          </p>
+        </div>
+      </form>
 
-  <form onSubmit="{addLocation}">
-    <label
-      >Ajouter un lieu:
-      <input ref="location" type="text" />
-    </label>
-  </form>
+      <form onSubmit="{addLocation}">
+        <div class="field is-grouped">
+          <p class="control">
+            <input
+              class="input"
+              placeholder="Lieu"
+              ref="location"
+              type="text"
+            />
+          </p>
+          <p class="control">
+            <button
+              if="{locations && locations.length}"
+              class="button is-danger"
+              type="button"
+              onClick="{resetLocations}"
+            >
+              Effacer les lieux
+            </button>
+          </p>
+        </div>
+      </form>
 
-  <label>
-    Affichage léger
-    <input checked onChange="{toggleLight}" type="checkbox" ref="light" />
-  </label>
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            Affichage léger
+            <input
+              class="checkbox"
+              checked
+              onChange="{toggleLight}"
+              type="checkbox"
+              ref="light"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-third">
+      <div class="notification is-danger" if="{error}">
+        <button onClick="{clearError}" class="delete"></button>
+        <p>
+          {error}
+        </p>
+      </div>
 
-  <p if="{error}">
-    {error}
-  </p>
+      <p if="{locations && locations.length}">
+        <b>Lieux:</b> {locations.join(', ')}<br />
+      </p>
 
-  <p>
-    Nombre d'utilisateurs: {nNodes}<br />
-    Nombre de liens: {nLinks}<br />
-    <virtual if="{rateLimit}">
-      coût: {rateLimit.cost}<br />
-      balance: {rateLimit.remaining}<br />
-      <i>reset</i> dans environ {new Date(Date.parse(rateLimit.resetAt) -
-      Date.now()).getUTCMinutes()} minutes
-    </virtual>
-  </p>
-
-  <p if="{locations && locations.length}">
-    Lieux: {locations.join(', ')}<br />
-    <button type="button" onClick="{resetLocations}">Effacer les lieux</button>
-  </p>
+      <p>
+        <b>Nombre d'utilisateurs:</b> {nNodes}<br />
+        <b>Nombre de liens:</b> {nLinks}<br />
+        <virtual if="{rateLimit}">
+          <b>Requêtes disponibles:</b> {rateLimit.remaining}<br />
+          <i>Reset</i> dans environ {new Date(Date.parse(rateLimit.resetAt) -
+          Date.now()).getUTCMinutes()} minutes
+        </virtual>
+      </p>
+    </div>
+  </div>
 
   <script>
     this.locations = ['québec', 'quebec', 'qc']
@@ -61,9 +112,12 @@
     const name = window.location.hash.slice(1)
     if (name) {
       this.fetchOne(name, this.hereRe)
-        .then(() => this.error = false)
-        .catch((e) => this.error = e)
-        .then(() => this.update())
+        .then(() => this.update({ error: false }))
+        .catch((e) => this.update({ error: e }))
+    }
+
+    clearError() {
+      this.update({ error: false })
     }
 
     toggleLight() {
@@ -71,10 +125,10 @@
     }
 
     resetLocations(ev) {
-      ev.preventDefault()
-      this.locations = false
-      this.hereRe = /()/
-      this.update()
+      this.update({
+        locations: false,
+        hereRe: /()/
+      })
     }
 
     addLocation(ev) {
@@ -86,9 +140,10 @@
       this.locations.push(val)
       const val2 = this.deburr(val)
       if (val2) this.locations.push(val2)
-      this.locations = this.uniq(this.locations)
-      this.hereRe = new RegExp(`(${this.locations.join('|')})`)
-      this.update()
+      this.update({
+        locations: this.uniq(this.locations),
+        hereRe: new RegExp(`(${this.locations.join('|')})`)
+      })
     }
 
     resetGraph(ev) {
@@ -101,9 +156,14 @@
       if (!val) return
       this.refs.username.value = ''
       this.fetchFollows(val, this.hereRe)
+        .then(() => this.update({ error: false }))
+        .catch((e) => this.update({ error: e }))
+
+        /*
         .then(() => this.error = false)
         .catch((e) => this.error = e)
         .then(() => this.update())
+        */
     }
 
     addUser(ev) {
@@ -112,9 +172,14 @@
       if (!val) return
       this.refs.username.value = ''
       this.fetchOne(val, this.hereRe)
+        .then(() => this.update({ error: false }))
+        .catch((e) => this.update({ error: e }))
+
+        /*
         .then(() => this.error = false)
         .catch((e) => this.error = e)
         .then(() => this.update())
+        */
     }
 
     const i = setInterval(() => {

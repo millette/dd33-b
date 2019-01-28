@@ -197,15 +197,13 @@ const fetchOne = (name, re) => {
 
   return ask(process.env.HELLO, name).then(
     ({
-      data: {
-        rateLimit,
-        user: {
-          login: nameSource,
-          location: locationSource,
-          avatarUrl: avatarUrlSource,
-          followers: { nodes },
-          following: { n2 },
-        },
+      rateLimit,
+      user: {
+        login: nameSource,
+        location: locationSource,
+        avatarUrl: avatarUrlSource,
+        followers: { nodes },
+        following: { n2 },
       },
     }) => {
       const source = addUser(nameSource, locationSource, avatarUrlSource)

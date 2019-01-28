@@ -41,8 +41,8 @@ const svgDefs = svg.append("defs")
 
 // const width = parseInt(svg.attr("width"), 10)
 // const height = parseInt(svg.attr("height"), 10)
-const width = 1200
-const height = 600
+const width = 1000
+const height = 500
 const color = d3.scaleOrdinal(d3.schemeCategory10)
 
 const dataNodes = []

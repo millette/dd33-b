@@ -34,7 +34,7 @@
     "graphql-tag": "^2.10.1",
     "husky": "2.7.0",
     "lint-staged": "^9.5.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-purgecss": "^2.1.2",
     "parcel-plugin-tag": "^1.2.0",
